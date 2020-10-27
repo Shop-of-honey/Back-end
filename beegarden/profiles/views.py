@@ -1,11 +1,14 @@
+from allauth.account.models import EmailConfirmationHMAC
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from profiles.models import Product, User
-from profiles.serializer import ProductSerializer, UserSerializer
+from serializer import UserSerializer, ProductSerializer
 
 
 class UserListView(APIView):
@@ -93,3 +96,10 @@ class ProductsViewSet(mixins.ListModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+
+def confirm_email(request, key):
+    email_confirmation = EmailConfirmationHMAC.from_key(key)
+    if email_confirmation:
+        email_confirmation.confirm(request)
+    return HttpResponseRedirect(reverse_lazy('api'))

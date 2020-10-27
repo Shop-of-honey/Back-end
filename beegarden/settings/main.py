@@ -76,6 +76,7 @@ TEMPLATES = [
 REST_AUTH_SERIALIZERS = {
     "USER_DETAILS_SERIALIZER": "profiles.serializer.UserDetailsSerializer",
 }
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 WSGI_APPLICATION = 'beegarden.wsgi.application'
 

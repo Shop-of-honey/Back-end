@@ -76,7 +76,6 @@ TEMPLATES = [
 REST_AUTH_SERIALIZERS = {
     "USER_DETAILS_SERIALIZER": "profiles.serializer.UserDetailsSerializer",
 }
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 WSGI_APPLICATION = 'beegarden.wsgi.application'
 
@@ -108,7 +107,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 ACCOUNT_LOGOUT_ON_GET = False
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 
 

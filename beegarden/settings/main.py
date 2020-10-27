@@ -1,7 +1,7 @@
 from pathlib import Path
 from decouple import config
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
 
@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'drf_yasg',
 
     'common.apps.CommonConfig',
 ]

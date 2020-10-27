@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from profiles.models import Product, User
-from serializer import UserSerializer, ProductSerializer
+from profiles.serializer import UserSerializer, ProductSerializer
 
 
 class UserListView(APIView):

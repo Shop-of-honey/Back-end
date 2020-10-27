@@ -2,7 +2,7 @@ from allauth.account.models import EmailConfirmationHMAC
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, permissions, decorators
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -36,7 +36,7 @@ class UserListView(APIView):
 
 
 class ProductListView(APIView):
-
+    @decorators.permission_classes(permissions.AllowAny)
     def get(self, request, search_string=None):
         """
         Returns profiles which contain searching string
@@ -67,6 +67,7 @@ class UsersViewSet(mixins.ListModelMixin,
     serializer_class = UserSerializer
     http_method_names = ['get', 'post', 'put', 'delete']
 
+
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
@@ -88,12 +89,15 @@ class ProductsViewSet(mixins.ListModelMixin,
     serializer_class = ProductSerializer
     http_method_names = ['get', 'post', 'put', 'delete']
 
+    @decorators.permission_classes(permissions.AllowAny)
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
+    @decorators.permission_classes(permissions.AllowAny)
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
+    @decorators.permission_classes(permissions.AllowAny)
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
 

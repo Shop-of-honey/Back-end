@@ -18,6 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/beegarden/settings" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/beegarden/common" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/beegarden" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/beegarden/profiles" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Pipenv (Back-end)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -5,7 +5,7 @@ from phone_field import PhoneField
 
 
 class User(AbstractUser):
-    phone = PhoneField(null=False, blank=False, unique=True, help_text='Contact phone number')
+    phone = PhoneField(null=True, blank=True, unique=True, help_text='Contact phone number')
     email = EmailField(max_length=100, help_text='Email')
 
     class Meta:

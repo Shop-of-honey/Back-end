@@ -73,6 +73,9 @@ TEMPLATES = [
         },
     },
 ]
+REST_AUTH_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "profiles.serializer.UserDetailsSerializer",
+}
 
 WSGI_APPLICATION = 'beegarden.wsgi.application'
 

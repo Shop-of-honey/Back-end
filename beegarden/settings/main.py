@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'phone_field',
     'rest_framework',
     'drf_yasg',
+    'corsheaders',
     'rest_framework.authtoken',
     'rest_auth.registration',
     'rest_auth',
@@ -40,7 +41,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 SITE_ID = 1
 

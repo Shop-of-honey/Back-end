@@ -37,7 +37,8 @@ class UserListView(APIView):
 
 
 class ProductListView(APIView):
-    @decorators.permission_classes(permissions.AllowAny)
+    permission_classes = [AllowAny]
+
     def get(self, request, search_string=None):
         """
         Returns profiles which contain searching string

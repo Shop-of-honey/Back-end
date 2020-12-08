@@ -1,4 +1,6 @@
 from django.contrib.auth.models import AbstractUser
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.db import models
 from django.db.models import EmailField
 from phone_field import PhoneField
@@ -14,6 +16,22 @@ class User(AbstractUser):
         verbose_name_plural = 'Пользователи'
 
 
+class Comment(models.Model):
+    text = models.TextField('Текст комментария', max_length=1023)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    datetime_create = models.DateTimeField('Дата создания', auto_now=True)
+
+    class Meta:
+        db_table = 'Comment'
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Коментарии'
+
+
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField('Назание товара', max_length=255,
@@ -24,6 +42,7 @@ class Product(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Создатель',
                                 related_name='created_products', null=True)
     price = models.PositiveIntegerField(help_text='the price of the product')
+    comment = GenericRelation(Comment)
 
     class Meta:
         db_table = 'Product'

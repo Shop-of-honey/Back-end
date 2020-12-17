@@ -15,8 +15,8 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         creator = UserSerializer(read_only=True)
 
-        model = Product, User
-        fields = ("id", "name", "description", "creator", "price")
+        model = Product
+        fields = ("id", "name", "description", "creator", "price", "location")
 
 
 class UserDetailsSerializer:

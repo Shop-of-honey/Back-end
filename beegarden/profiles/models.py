@@ -42,6 +42,9 @@ class Product(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Создатель',
                                 related_name='created_products', null=True)
     price = models.PositiveIntegerField(help_text='the price of the product')
+    location = models.CharField('Местоположение продавца', max_length=1023,
+                                   help_text='Местоположение продавца может быть максимум в 1023 символов',
+                                   null=True, blank=True)
     comment = GenericRelation(Comment)
 
     class Meta:

@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', "email", "phone")
+        fields = ('id', 'first_name', 'last_name', "email", "phone")
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -15,7 +15,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         creator = UserSerializer(read_only=True)
 
-        model = Product
+        model = Product, User
         fields = ("id", "name", "description", "creator", "price")
 
 

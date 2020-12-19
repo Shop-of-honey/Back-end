@@ -87,7 +87,7 @@ class ProductsViewSet(mixins.ListModelMixin,
                       mixins.DestroyModelMixin,
                       viewsets.GenericViewSet):
 
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     http_method_names = ['get', 'post', 'put', 'delete']

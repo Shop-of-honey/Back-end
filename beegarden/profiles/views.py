@@ -1,12 +1,13 @@
 from allauth.account.models import EmailConfirmationHMAC
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.urls import reverse_lazy
-from rest_framework import mixins, viewsets, permissions, decorators
+from rest_framework import mixins, viewsets, permissions, decorators, generics, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 
 from profiles.models import Product, User
 from profiles.serializer import UserSerializer, ProductSerializer
@@ -64,7 +65,6 @@ class UsersViewSet(mixins.ListModelMixin,
                    mixins.UpdateModelMixin,
                    mixins.DestroyModelMixin,
                    viewsets.GenericViewSet):
-
     permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -80,29 +80,77 @@ class UsersViewSet(mixins.ListModelMixin,
         return self.destroy(request, *args, **kwargs)
 
 
-class ProductsViewSet(mixins.ListModelMixin,
-                      mixins.CreateModelMixin,
-                      mixins.RetrieveModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.DestroyModelMixin,
-                      viewsets.GenericViewSet):
+'''class ProductsDetail(APIView):
 
+    @api_view(['GET'])
+    @permission_classes([AllowAny])
+    def get_object(self, id):
+        try:
+            return Product.objects.get(id=id)
+        except Product.DoesNotExist:
+            raise Http404
+
+    @api_view(['DELETE'])
+    @permission_classes([IsAuthenticated])
+    def delete(self, request, id):
+        product = self.get_object(id)
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @api_view(['PUT'])
+    @permission_classes([IsAuthenticated])
+    def put(self, request, id):
+        product = self.get_object(id)
+        serializer = ProductSerializer(product, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProductList(APIView):
+    @api_view(['GET'])
+    @permission_classes([AllowAny])
+    def get(self, request):
+        product = Product.objects.all()
+        serializer = ProductSerializer(product, many=True)
+        return Response(serializer.data)
+
+    @api_view(['POST'])
+    @permission_classes([IsAuthenticated])
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)'''
+
+
+class ProductCreate(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    http_method_names = ['get', 'post', 'put', 'delete']
 
-    @decorators.permission_classes(permissions.AllowAny)
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    @decorators.permission_classes(permissions.AllowAny)
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+class ProductList(generics.ListAPIView):
+    permission_classes = [AllowAny]
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
-    @decorators.permission_classes(permissions.AllowAny)
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+
+class ProductUpdate(generics.RetrieveUpdateAPIView):
+    permission_classes = [AllowAny]
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+class ProductDelete(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+
 
 
 def confirm_email(request, key):
@@ -116,4 +164,3 @@ def confirm_email(request, key):
 @permission_classes([IsAuthenticated])
 def is_authenticated(request):
     return HttpResponse(status=200)
-

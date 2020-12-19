@@ -1,5 +1,6 @@
-from django.urls import re_path, include
+from django.urls import re_path, include, path
 from rest_framework.routers import DefaultRouter
+from profiles import views
 
 from profiles.views import ProductsViewSet, UserListView, ProductListView, UsersViewSet
 
@@ -15,4 +16,5 @@ urlpatterns = [
     re_path(r'product/(?P<search_string>\w+|)', ProductListView.as_view()),
     re_path(r'products/', include(profiles_router.urls)),
     re_path(r'users/', include(users_router.urls)),
+    path('is_authenticated/', views.is_authenticated, name='is_authenticated')
 ]

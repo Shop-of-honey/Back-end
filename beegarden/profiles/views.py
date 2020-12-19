@@ -1,10 +1,10 @@
 from allauth.account.models import EmailConfirmationHMAC
 from django.contrib.postgres.search import SearchQuery, SearchVector, SearchRank
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy
 from rest_framework import mixins, viewsets, permissions, decorators
-from rest_framework.decorators import api_view
-from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -110,3 +110,10 @@ def confirm_email(request, key):
     if email_confirmation:
         email_confirmation.confirm(request)
     return HttpResponseRedirect(reverse_lazy('api'))
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def is_authenticated(request):
+    return HttpResponse(status=200)
+

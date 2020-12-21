@@ -5,23 +5,21 @@ from django_restql.mixins import DynamicFieldsMixin
 
 
 class UserSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = ('id', 'first_name', 'last_name', "email", "phone")
 
 
 class ProductSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+    creator = UserSerializer(read_only=True, fields=["email", "phone", "first_name", "last_name"])
 
     class Meta:
-        creator = UserSerializer(read_only=True, fields=["email"])
-
         model = Product
         fields = ("id", "name", "description", "creator", "price", "location")
 
 
 class UserDetailsSerializer:
-
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'email', 'phone')
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone', 'description')
+        read_only_fields = ('email',)

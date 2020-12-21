@@ -58,8 +58,7 @@ class ProductListView(APIView):
         print(qs)
         return Response(ProductSerializer(qs, many=True).data)
 
-
-class UsersViewSet(mixins.ListModelMixin,
+'''class UsersViewSet(mixins.ListModelMixin,
                    mixins.CreateModelMixin,
                    mixins.RetrieveModelMixin,
                    mixins.UpdateModelMixin,
@@ -78,7 +77,7 @@ class UsersViewSet(mixins.ListModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
-
+'''
 
 '''class ProductsDetail(APIView):
 
@@ -126,6 +125,30 @@ class ProductList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)'''
 
 
+class UserCreate(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserList(generics.ListAPIView):
+    permission_classes = [AllowAny]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserUpdate(generics.RetrieveUpdateAPIView):
+    permission_classes = [AllowAny]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDelete(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
 class ProductCreate(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Product.objects.all()
@@ -148,9 +171,6 @@ class ProductDelete(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
-
-
 
 
 def confirm_email(request, key):

@@ -9,6 +9,7 @@ from phone_field import PhoneField
 class User(AbstractUser):
     phone = PhoneField(null=True, blank=True, unique=False, help_text='Contact phone number')
     email = EmailField(max_length=100, help_text='Email')
+    description = models.TextField('Описание пользователя', max_length=1023, null=True, blank=True)
 
     class Meta:
         db_table = 'User'
@@ -43,8 +44,8 @@ class Product(models.Model):
                                 related_name='created_products', null=True)
     price = models.PositiveIntegerField(help_text='the price of the product')
     location = models.CharField('Местоположение продавца', max_length=1023,
-                                   help_text='Местоположение продавца может быть максимум в 1023 символов',
-                                   null=True, blank=True)
+                                help_text='Местоположение продавца может быть максимум в 1023 символов',
+                                null=True, blank=True)
     comment = GenericRelation(Comment)
 
     class Meta:

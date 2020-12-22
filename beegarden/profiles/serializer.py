@@ -13,7 +13,7 @@ class UserAunSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
 class UserSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', "email", "phone")
+        fields = ('id', 'username', 'first_name', 'last_name', "email", "phone")
 
 
 class ProductSerializer(DynamicFieldsMixin, serializers.ModelSerializer):

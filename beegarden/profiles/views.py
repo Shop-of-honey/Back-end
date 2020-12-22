@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 
 from profiles.models import Product, User
-from profiles.serializer import UserSerializer, ProductSerializer, UserAunSerializer
+from profiles.serializer import UserSerializer, ProductSerializer, UserAunSerializer, ProductCreateeSerializer
 
 
 class UserListView(APIView):
@@ -152,7 +152,7 @@ class UserDelete(generics.DestroyAPIView):
 class ProductCreate(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductCreateeSerializer
 
 
 class ProductList(generics.ListAPIView):

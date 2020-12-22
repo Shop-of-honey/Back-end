@@ -17,12 +17,18 @@ class UserSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
 
 
 class ProductSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
-    creator = UserSerializer(read_only=True, fields=["email", "phone", "first_name", "last_name"])
+    creator = UserSerializer(read_only=True, fields=["id", "email", "phone", "username"])
 
     class Meta:
         model = Product
         fields = ("id", "name", "description", "creator", "price", "location")
 
+
+class ProductCreateeSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = ("id", "name", "description", "creator", "price", "location")
 
 class UserDetailsSerializer:
     class Meta:

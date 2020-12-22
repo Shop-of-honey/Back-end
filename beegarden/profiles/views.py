@@ -181,7 +181,7 @@ def confirm_email(request, key):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated],)
 def is_authenticated(request):
     if request.user.is_authenticated:
         dataset = User.objects.filter(id=request.user.id)

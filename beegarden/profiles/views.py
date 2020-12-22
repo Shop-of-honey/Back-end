@@ -186,6 +186,6 @@ def is_authenticated(request):
     if request.user.is_authenticated:
         dataset = User.objects.filter(id=request.user.id)
         serializer = UserAunSerializer(instance=dataset)
-        return Response(serializer.data)
+        return Response({'data': serializer.data, 'dataset':dataset})
     else:
         return Response(status=401)

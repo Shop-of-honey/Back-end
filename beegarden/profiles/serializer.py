@@ -4,6 +4,12 @@ from profiles.models import Product, User
 from django_restql.mixins import DynamicFieldsMixin
 
 
+class UserAunSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name')
+
+
 class UserSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     class Meta:
         model = User

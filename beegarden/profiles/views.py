@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 
 from profiles.models import Product, User
-from profiles.serializer import UserSerializer, ProductSerializer
+from profiles.serializer import UserSerializer, ProductSerializer, UserAunSerializer
 
 
 class UserListView(APIView):
@@ -185,6 +185,6 @@ def confirm_email(request, key):
 def is_authenticated(request):
     if request.user.is_authenticated:
         data = User.objects.filter(id=request.user.id)
-        return Response(UserSerializer(data).data)
+        return Response(UserAunSerializer(data).data)
     else:
         return Response(status=401)

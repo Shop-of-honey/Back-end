@@ -183,4 +183,8 @@ def confirm_email(request, key):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def is_authenticated(request):
-    return HttpResponse(status=200)
+    if request.user.is_authenticated():
+        data = User.objects.filter(id=request.user.id)
+        return HttpResponse(data, "application/json")
+    else:
+        return HttpResponse(status=401)

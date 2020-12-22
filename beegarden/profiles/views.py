@@ -185,6 +185,6 @@ def confirm_email(request, key):
 def is_authenticated(request):
     if request.user.is_authenticated:
         dataset = User.objects.filter(id=request.user.id)
-        return Response(request.user)
+        return Response(UserAunSerializer(request.user))
     else:
         return Response(status=401)
